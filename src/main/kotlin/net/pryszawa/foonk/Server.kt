@@ -13,7 +13,6 @@ class Server(config: Config) : Runnable {
         this.host = config.getHost()
         this.port = config.getPort()
         this.setPasswordAuthenticator { username: String?, password: String?, session: ServerSession? ->
-            println("----------------- LOGIN --------------------")
             (config.getLogin()?.let { it == username } ?: true) &&
                     (config.getPassword()?.let { it == password } ?: true)
         }

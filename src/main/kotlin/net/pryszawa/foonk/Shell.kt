@@ -49,8 +49,10 @@ class Shell(val channel: ChannelSession,
                 val reader = LineReaderBuilder.builder().terminal(it).build()
                 var line = reader.readLine("Foonk>")
                 while (line != null) {
-                    if (line == ":q" || thread.isInterrupted)
+                    if (line == ":q" || thread.isInterrupted) {
+                        server.stopServer()
                         break
+                    }
                     line = reader.readLine("Foonk>")
                 }
                 it.flush()
