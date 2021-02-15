@@ -1,0 +1,42 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.4.10'
+    id 'application'
+}
+
+group = 'net.pryszawa.foonk'
+version = '1.0.0-SNAPSHOT'
+
+ext {
+    jlineVersion = "3.19.0"
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.jline:jline-terminal:${jlineVersion}"
+    implementation "org.jline:jline-reader:${jlineVersion}"
+    implementation "org.apache.sshd:sshd-core:2.6.0"
+    implementation "commons-cli:commons-cli:1.4"
+
+    testImplementation 'org.jetbrains.kotlin:kotlin-test-junit5'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.0'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = '11'
+}
+
+compileTestKotlin {
+    kotlinOptions.jvmTarget = '11'
+}
+
+application {
+    mainClassName = 'MainKt'
+}
