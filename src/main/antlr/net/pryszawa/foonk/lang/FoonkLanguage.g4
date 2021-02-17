@@ -54,6 +54,6 @@ asgmt returns [FoonkAssignmentInstruction instruction]
       ;
 
 IDENTIFIER : [a-zA-Z_][a-zA-Z_0-9]* ;
-NUMBER : [1-9][0-9]* ('.' [0-9]*)+ ;
+NUMBER : [1-9][0-9]* ('.' [0-9]*)? ;
 BECOMES : ':' '=' ;
 WS : [ \r\n\t] -> skip;
