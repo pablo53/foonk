@@ -58,12 +58,18 @@ class Shell(val channel: ChannelSession,
                         break
                     } else
                         line.toFoonkInstruction().go(ctx)
-                    line = reader.readLine("Foonk>")
+                    line = reader.readLine("\r\nFoonk>")
                 }
                 it.flush()
             }
             exitCBack.onExit(0)
         } catch (ex: Exception) {
+            ex.printStackTrace()
+            try {
+                server.stopServer()
+            } catch (ex2: Exception) {
+                ex2.printStackTrace()
+            }
             exitCBack.onExit(-1)
         }
     }

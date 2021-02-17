@@ -14,7 +14,7 @@ inline fun String.toFoonkInstruction(): FoonkInstruction = ANTLRInputStream(this
 inline fun ANTLRInputStream.toFoonkInstruction(): FoonkInstruction =
     try {
         val instr = FoonkLanguageParser(CommonTokenStream(FoonkLanguageLexer(this))).instr()
-        instr.instruction
+        instr.instruction ?: FoonkErrorInstruction("Not an instruction!")
     } catch (ex: RecognitionException) {
         FoonkErrorInstruction(FoonkException(message = ex.message, cause = ex))
     }

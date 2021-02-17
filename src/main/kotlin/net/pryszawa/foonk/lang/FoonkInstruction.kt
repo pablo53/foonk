@@ -27,10 +27,12 @@ class FoonkVariableInstruction(private val variable: FoonkVariable) : FoonkInstr
 
 }
 
-class FoonkErrorInstruction(private val ex: FoonkException) : FoonkInstruction() {
+class FoonkErrorInstruction(private val errorMessage: String) : FoonkInstruction() {
+
+    constructor(ex: FoonkException) : this(ex.message ?: ex.javaClass.canonicalName)
 
     override fun go(ctx: FoonkRunContext) {
-        ctx.err.println("ERROR: ${ex.message}")
+        ctx.err.println("ERROR: $errorMessage")
     }
 
 }
