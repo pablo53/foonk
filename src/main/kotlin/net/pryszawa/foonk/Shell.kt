@@ -1,5 +1,7 @@
 package net.pryszawa.foonk
 
+import net.pryszawa.foonk.lang.FoonkComputingContext
+import net.pryszawa.foonk.lang.toFoonkInstruction
 import org.apache.sshd.server.Environment
 import org.apache.sshd.server.ExitCallback
 import org.apache.sshd.server.channel.ChannelSession
@@ -46,13 +48,15 @@ class Shell(val channel: ChannelSession,
     override fun run() {
         try {
             TerminalBuilder.builder().system(false).streams(input, output).build().use {
+                val ctx = FoonkComputingContext()
                 val reader = LineReaderBuilder.builder().terminal(it).build()
                 var line = reader.readLine("Foonk>")
                 while (line != null) {
                     if (line == ":q" || thread.isInterrupted) {
                         server.stopServer()
                         break
-                    }
+                    } else
+                        line.toFoonkInstruction().go(ctx)
                     line = reader.readLine("Foonk>")
                 }
                 it.flush()

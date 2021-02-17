@@ -36,6 +36,8 @@ compileKotlin {
     kotlinOptions.jvmTarget = '11'
 }
 
+compileKotlin.dependsOn generateGrammarSource
+
 compileTestKotlin {
     kotlinOptions.jvmTarget = '11'
 }

@@ -1,12 +1,14 @@
 package net.pryszawa.foonk.lang
 
+import net.pryszawa.foonk.FoonkException
+
 abstract class FoonkInstruction {
 
     abstract fun go(ctx: FoonkComputingContext)
 
 }
 
-class FoonkAssignmentInstruction(val variable: FoonkVariable, val rExpr: FoonkExpression) : FoonkInstruction() {
+class FoonkAssignmentInstruction(private val variable: FoonkVariable, private val rExpr: FoonkExpression) : FoonkInstruction() {
 
     override fun go(ctx: FoonkComputingContext) {
         val fvalue = rExpr.compute(ctx)
@@ -16,11 +18,19 @@ class FoonkAssignmentInstruction(val variable: FoonkVariable, val rExpr: FoonkEx
 
 }
 
-class FoonkVariableInstruction(val variable: FoonkVariable) : FoonkInstruction() {
+class FoonkVariableInstruction(private val variable: FoonkVariable) : FoonkInstruction() {
 
     override fun go(ctx: FoonkComputingContext) {
         val fvalue = ctx.variables[variable]
         println("${variable.name} = $fvalue")
+    }
+
+}
+
+class FoonkErrorInstruction(private val ex: FoonkException) : FoonkInstruction() {
+
+    override fun go(ctx: FoonkComputingContext) {
+        println("ERROR: ${ex.message}")
     }
 
 }
