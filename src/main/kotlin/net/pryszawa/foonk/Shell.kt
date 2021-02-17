@@ -1,6 +1,6 @@
 package net.pryszawa.foonk
 
-import net.pryszawa.foonk.lang.FoonkComputingContext
+import net.pryszawa.foonk.lang.FoonkRunContext
 import net.pryszawa.foonk.lang.toFoonkInstruction
 import org.apache.sshd.server.Environment
 import org.apache.sshd.server.ExitCallback
@@ -10,6 +10,7 @@ import org.jline.reader.LineReaderBuilder
 import org.jline.terminal.TerminalBuilder
 import java.io.InputStream
 import java.io.OutputStream
+import java.io.PrintStream
 import java.lang.Exception
 
 class Shell(val channel: ChannelSession,
@@ -48,7 +49,7 @@ class Shell(val channel: ChannelSession,
     override fun run() {
         try {
             TerminalBuilder.builder().system(false).streams(input, output).build().use {
-                val ctx = FoonkComputingContext()
+                val ctx = FoonkRunContext(out = PrintStream(output), err = PrintStream(errOutput))
                 val reader = LineReaderBuilder.builder().terminal(it).build()
                 var line = reader.readLine("Foonk>")
                 while (line != null) {

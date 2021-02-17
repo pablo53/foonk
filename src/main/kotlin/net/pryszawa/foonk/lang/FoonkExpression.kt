@@ -6,25 +6,25 @@ typealias FoonkValueBiOperation = (FoonkValue, FoonkValue) -> FoonkValue
 
 abstract class FoonkExpression() {
 
-    abstract fun compute(ctx: FoonkComputingContext): FoonkValue
+    abstract fun compute(ctx: FoonkRunContext): FoonkValue
 
 }
 
 class FoonkConstExpression(val value: FoonkValue) : FoonkExpression() {
 
-    override fun compute(ctx: FoonkComputingContext) = value
+    override fun compute(ctx: FoonkRunContext) = value
 
 }
 
 class FoonkVariableExpression(val identifier: FoonkVariable) : FoonkExpression() {
 
-    override fun compute(ctx: FoonkComputingContext) = ctx.variables[identifier] ?: neutralFunkValue
+    override fun compute(ctx: FoonkRunContext) = ctx.variables[identifier] ?: neutralFunkValue
 
 }
 
 abstract class FoonkBiExpression(val lvalue: FoonkExpression, val rvalue: FoonkExpression) : FoonkExpression() {
 
-    override fun compute(ctx: FoonkComputingContext) = operation(lvalue.compute(ctx), rvalue.compute(ctx))
+    override fun compute(ctx: FoonkRunContext) = operation(lvalue.compute(ctx), rvalue.compute(ctx))
 
     abstract val operation: FoonkValueBiOperation
 

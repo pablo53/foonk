@@ -29,8 +29,8 @@ package net.pryszawa.foonk.lang;
 }
 
 instr returns [FoonkInstruction instruction]
-      : var { $instruction = new FoonkVariableInstruction($var.ctx.variable); }
-      | asgmt { $instruction = $asgmt.ctx.instruction; }
+      : var EOF { $instruction = new FoonkVariableInstruction($var.ctx.variable); }
+      | asgmt EOF { $instruction = $asgmt.ctx.instruction; }
       ;
 
 var returns [FoonkVariable variable]
