@@ -14,6 +14,7 @@ class FoonkAssignmentInstruction(private val variable: FoonkVariable, private va
         val fvalue = rExpr.compute(ctx)
         ctx.variables[variable] = fvalue
         ctx.out.println("${variable.name} = $fvalue")
+        ctx.out.flush()
     }
 
 }
@@ -23,6 +24,7 @@ class FoonkVariableInstruction(private val variable: FoonkVariable) : FoonkInstr
     override fun go(ctx: FoonkRunContext) {
         val fvalue = ctx.variables[variable]
         ctx.out.println("${variable.name} = $fvalue")
+        ctx.out.flush()
     }
 
 }
@@ -33,6 +35,7 @@ class FoonkErrorInstruction(private val errorMessage: String) : FoonkInstruction
 
     override fun go(ctx: FoonkRunContext) {
         ctx.err.println("ERROR: $errorMessage")
+        ctx.err.flush()
     }
 
 }
